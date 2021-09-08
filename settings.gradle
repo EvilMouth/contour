@@ -1,5 +1,5 @@
 rootProject.name = 'contour-parent'
 
 include ':contour'
-include ':contour-lint'
+//include ':contour-lint'
 include ':sample-app'
