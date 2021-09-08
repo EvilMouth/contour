@@ -22,6 +22,11 @@ import com.squareup.contour.SizeMode.Exact
 import com.squareup.contour.errors.CircularReferenceDetected
 import com.squareup.contour.solvers.SimpleAxisSolver.Point
 
+/**
+ * 目前有两种实现
+ * [PositionConstraint] 计算出x/y坐标
+ * size constraint 计算出宽/高 in pixel
+ */
 internal open class Constraint {
   private var isResolving: Boolean = false
   private var container: LayoutContainer? = null

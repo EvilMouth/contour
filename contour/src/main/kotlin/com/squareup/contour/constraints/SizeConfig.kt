@@ -17,6 +17,10 @@
 package com.squareup.contour.constraints
 
 internal typealias SizeConfigLambda = (available: Int) -> Int
+
+/**
+ * for [com.squareup.contour.ContourLayout] 计算宽/高
+ */
 internal class SizeConfig(
   var available: Int = Int.MIN_VALUE,
   var result: Int = Int.MIN_VALUE,

@@ -29,6 +29,7 @@ internal interface HasDimensions {
   val baseline: Int
 }
 
+// 代理一下view
 internal class ViewDimensions(private val view: View) : HasDimensions {
   override fun measure(
     w: Int,

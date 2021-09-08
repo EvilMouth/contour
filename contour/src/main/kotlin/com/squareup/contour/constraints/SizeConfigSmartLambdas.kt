@@ -25,6 +25,8 @@ import kotlin.math.max
 
 internal object SizeConfigSmartLambdas {
   fun matchParent(): SizeConfigLambda = { it }
+
+  // 父布局的大小由子view决定
   fun wrapContent(view: ContourLayout, axis: CoordinateAxis): SizeConfigLambda = {
     view.run {
       children

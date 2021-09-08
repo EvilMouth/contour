@@ -26,6 +26,10 @@ interface LayoutContainer {
   val parent: Geometry
 }
 
+/**
+ * 链式调用
+ */
+
 interface WidthOfOnlyContext : XAxisSolver, HasXPositionWithoutWidth
 interface HeightOfOnlyContext : YAxisSolver, HasYPositionWithoutHeight
 

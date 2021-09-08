@@ -25,6 +25,8 @@ import com.squareup.contour.YFloat
 import com.squareup.contour.YInt
 import com.squareup.contour.constraints.SizeConfigLambda
 
+// 只是一些内联处理
+
 internal inline fun unwrapXIntToXIntLambda(
   crossinline lambda: (XInt) -> XInt
 ): SizeConfigLambda =

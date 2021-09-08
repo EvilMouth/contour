@@ -24,6 +24,9 @@ import com.squareup.contour.constraints.SizeConfig
 import com.squareup.contour.utils.toXInt
 import com.squareup.contour.utils.toYInt
 
+/**
+ * 记录 [com.squareup.contour.ContourLayout] 的宽高信息
+ */
 internal class ParentGeometry(
   private val widthConfig: SizeConfig,
   private val heightConfig: SizeConfig,

@@ -22,6 +22,10 @@ import com.squareup.contour.ContourLayout.LayoutSpec
 import com.squareup.contour.solvers.ComparisonResolver.CompareBy.MaxOf
 import com.squareup.contour.solvers.ComparisonResolver.CompareBy.MinOf
 
+/**
+ * 给定两个点来动态解决最终选用哪个作为锚
+ * 快速理解：类似Barrier
+ */
 internal class ComparisonResolver(
   private val p0: AxisSolver,
   private val p1: AxisSolver,

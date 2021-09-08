@@ -238,6 +238,9 @@ open class ContourLayout(
     }
   }
 
+  /**
+   * reset，这样在[measure] [layout]过程就会重新计算
+   */
   private fun invalidateAll() {
     widthConfig.clear()
     heightConfig.clear()
@@ -254,6 +257,9 @@ open class ContourLayout(
     return layoutParams as LayoutSpec
   }
 
+  /**
+   * 检查是否存在循环约束
+   */
   private inline fun <T> View.handleCrd(block: () -> T): T {
     return try {
       block()
@@ -708,6 +714,10 @@ open class ContourLayout(
   else
     throw UnsupportedOperationException(ADDVIEW_DEPRECATION_MESSAGE)
 
+  /**
+   * 所有子view都应该是应用这个layoutParams
+   * 其实正常使用方式都应该通过[layoutBy]来将子view添加进来，所以子view都会是应该该lp
+   */
   class LayoutSpec(
     internal val x: XAxisSolver,
     internal val y: YAxisSolver
@@ -722,6 +732,7 @@ open class ContourLayout(
       y.onAttach(this)
     }
 
+    // 四个点坐标就是x/y的min/max来解决的
     internal fun left(): XInt = x.min().toXInt()
     internal fun right(): XInt = x.max().toXInt()
     internal fun centerX(): XInt = x.mid().toXInt()

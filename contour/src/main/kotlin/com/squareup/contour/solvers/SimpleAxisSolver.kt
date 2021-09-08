@@ -38,6 +38,13 @@ import com.squareup.contour.utils.unwrapYFloatLambda
 import com.squareup.contour.utils.unwrapYIntLambda
 import kotlin.math.abs
 
+/**
+ * 大部分情况都适用的解决方案
+ * 通过两个点[p0] [p1]来计算大小位置
+ * 或通过[p0] [size]来计算大小位置
+ *
+ * !该类同时承载横坐标以及纵坐标，所以[p0]可以是x也可以是y，同理[p1]对应
+ */
 internal class SimpleAxisSolver(
   point: Point,
   lambda: LayoutContainer.() -> Int
@@ -54,15 +61,22 @@ internal class SimpleAxisSolver(
 
   private lateinit var parent: LayoutSpec
 
+  // 约束点，用于计算大小
+  // 初始约束点，以[ContourLayout.leftTo]开始
   private val p0 = PositionConstraint(point, lambda)
+  // 第二个约束点，[rightTo]
   private val p1 = PositionConstraint()
+  // 也是第二个约束点，但是是指定大小，[widthOf]
   private val size = Constraint()
 
+  // 左/上 坐标
   private var min = Int.MIN_VALUE
   private var mid = Int.MIN_VALUE
   private var baseline = Int.MIN_VALUE
+  // 右/下 坐标
   private var max = Int.MIN_VALUE
 
+  // 左右相差/上下相差 in pixel
   private var range = Int.MIN_VALUE
   private var baselineRange = Int.MIN_VALUE
 
@@ -141,6 +155,7 @@ internal class SimpleAxisSolver(
     }
   }
 
+  // 已经计算出range了，可以以此来确定左右/上下坐标了
   private fun resolveAxis() {
     check(range != Int.MIN_VALUE)
 
@@ -187,12 +202,16 @@ internal class SimpleAxisSolver(
   }
 
   override fun measureSpec(): Int {
-    return if (p1.isSet) {
-      View.MeasureSpec.makeMeasureSpec(abs(p0.resolve() - p1.resolve()), p1.mode.mask)
-    } else if (size.isSet) {
-      View.MeasureSpec.makeMeasureSpec(size.resolve(), size.mode.mask)
-    } else {
-      0
+    return when {
+        p1.isSet -> {
+          View.MeasureSpec.makeMeasureSpec(abs(p0.resolve() - p1.resolve()), p1.mode.mask)
+        }
+        size.isSet -> {
+          View.MeasureSpec.makeMeasureSpec(size.resolve(), size.mode.mask)
+        }
+        else -> {
+          0 // wrap content
+        }
     }
   }
 
