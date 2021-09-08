@@ -18,7 +18,7 @@
 
 package com.squareup.contour
 
-import android.graphics.Rect
+import com.squareup.contour.constraints.PaddingConfig
 
 /**
  * Represents a rectangle in your layout.
@@ -37,5 +37,5 @@ interface Geometry {
   fun height(): YInt
   fun centerY(): YInt
 
-  fun padding(): Rect
+  fun padding(): PaddingConfig
 }

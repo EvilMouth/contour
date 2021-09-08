@@ -20,6 +20,7 @@ import android.graphics.Rect
 import com.google.common.truth.Truth.assertThat
 import com.squareup.contour.XInt
 import com.squareup.contour.YInt
+import com.squareup.contour.constraints.PaddingConfig
 import com.squareup.contour.constraints.SizeConfig
 import org.junit.Test
 
@@ -36,7 +37,16 @@ class ParentGeometryTest {
   private val parentGeometry = ParentGeometry(
     widthConfig = SizeConfig(available = 120, lambda = { it }),
     heightConfig = SizeConfig(available = 60, lambda = { it }),
-    paddingConfig = paddingConfig
+    paddingConfig = object : PaddingConfig {
+      override val left: Int
+        get() = paddingConfig().left
+      override val top: Int
+        get() = paddingConfig().top
+      override val right: Int
+        get() = paddingConfig().right
+      override val bottom: Int
+        get() = paddingConfig().bottom
+    }
   )
 
   @Test

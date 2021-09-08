@@ -16,10 +16,10 @@
 
 package com.squareup.contour.wrappers
 
-import android.graphics.Rect
 import com.squareup.contour.Geometry
 import com.squareup.contour.XInt
 import com.squareup.contour.YInt
+import com.squareup.contour.constraints.PaddingConfig
 import com.squareup.contour.constraints.SizeConfig
 import com.squareup.contour.utils.toXInt
 import com.squareup.contour.utils.toYInt
@@ -30,7 +30,7 @@ import com.squareup.contour.utils.toYInt
 internal class ParentGeometry(
   private val widthConfig: SizeConfig,
   private val heightConfig: SizeConfig,
-  private val paddingConfig: () -> Rect
+  private val paddingConfig: PaddingConfig
 ) : Geometry {
   override fun left(): XInt = XInt.ZERO + padding().left
   override fun right(): XInt = widthConfig.resolve().toXInt() - padding().right
@@ -42,5 +42,5 @@ internal class ParentGeometry(
   override fun height(): YInt = heightConfig.resolve().toYInt()
   override fun centerY(): YInt = heightConfig.resolve().toYInt() / 2
 
-  override fun padding(): Rect = paddingConfig()
+  override fun padding(): PaddingConfig = paddingConfig
 }

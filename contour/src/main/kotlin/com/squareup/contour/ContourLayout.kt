@@ -19,10 +19,10 @@
 package com.squareup.contour
 
 import android.content.Context
-import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
+import com.squareup.contour.constraints.PaddingConfig
 import com.squareup.contour.constraints.SizeConfig
 import com.squareup.contour.constraints.SizeConfigSmartLambdas.CoordinateAxis.HORIZONTAL
 import com.squareup.contour.constraints.SizeConfigSmartLambdas.CoordinateAxis.VERTICAL
@@ -181,18 +181,25 @@ open class ContourLayout(
   private val geometry = ParentGeometry(
       widthConfig = widthConfig,
       heightConfig = heightConfig,
-      paddingConfig = {
-        if (respectPadding) {
-          Rect(paddingLeft, paddingTop, paddingRight, paddingBottom)
-        } else {
-          Rect(0, 0, 0, 0)
-        }
+      paddingConfig = object : PaddingConfig {
+        override val left: Int
+          get() = if (respectPadding) paddingLeft else 0
+        override val top: Int
+          get() = if (respectPadding) paddingTop else 0
+        override val right: Int
+          get() = if (respectPadding) paddingRight else 0
+        override val bottom: Int
+          get() = if (respectPadding) paddingBottom else 0
       }
   )
   private var constructed: Boolean = true
   private var lastWidthSpec: Int = 0
   private var lastHeightSpec: Int = 0
 
+  /**
+   * 可以重写该方法针对具体比较复杂的ui情况来获得更高性能
+   * 有些view并不需要重新测量，或者另一种做法是继续拆分
+   */
   override fun requestLayout() {
     if (constructed) {
       invalidateAll()
