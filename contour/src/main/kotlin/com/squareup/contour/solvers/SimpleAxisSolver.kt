@@ -210,7 +210,11 @@ internal class SimpleAxisSolver(
           View.MeasureSpec.makeMeasureSpec(size.resolve(), size.mode.mask)
         }
         else -> {
-          0 // wrap content
+          /**
+           * [View.MeasureSpec.UNSPECIFIED] 0
+           * 子View想要多大给多大，不受Parent限制
+           */
+          0
         }
     }
   }
